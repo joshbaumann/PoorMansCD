@@ -1,0 +1,50 @@
+version: '3.8'
+services:
+
+  proxy:
+    container_name: proxy
+    image: caddy:latest
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./infrastructure/caddy/Caddyfile.dev:/etc/caddy/Caddyfile
+      - ./infrastructure/caddy/data:/data
+    networks:
+      - web
+
+  app1:
+    container_name: app1
+    image: node:14-alpine
+    volumes:
+      - .:/usr/src/service:cached
+    working_dir: /usr/src/service
+    command: npm run start:dev app1
+    restart: on-failure
+    env_file:
+      - .env
+    ports:
+      - 3000:${PORT}
+    networks:
+      - web
+
+  app2:
+    container_name: app2
+    image: node:14-alpine
+    volumes:
+      - .:/usr/src/service:cached
+    working_dir: /usr/src/service
+    command: npm run start:dev app2
+    restart: on-failure
+    env_file:
+      - .env
+    ports:
+      - 3100:${PORT}
+    networks:
+      - web
+
+networks:
+  web:

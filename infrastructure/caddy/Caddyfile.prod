@@ -1,0 +1,15 @@
+{
+	auto_https disable_redirects
+}
+
+:80 {
+  route /app1* {
+    uri strip_prefix /app1
+    reverse_proxy app1:{$PORT}
+  }
+
+  route /app2* {
+    uri strip_prefix /app2
+    reverse_proxy app2:{$PORT}
+  }
+}

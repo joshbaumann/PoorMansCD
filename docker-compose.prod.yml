@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+
+  proxy:
+    container_name: proxy
+    image: caddy:latest
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - .:/data
+    networks:
+      - web
+
+  app1:
+    container_name: app1
+    image: barrymcj/poormanscd:app1
+    restart: on-failure
+    env_file:
+      - .env
+    ports:
+      - ${PORT}
+    networks:
+      - web
+
+  app2:
+    container_name: app2
+    image: barrymcj/poormanscd:app2
+    restart: on-failure
+    env_file:
+      - .env
+    ports:
+      - ${PORT}
+    depends_on:
+      - chrome-server
+    networks:
+      - web
+
+networks:
+  web:
