@@ -1,6 +1,5 @@
-FROM node:14-alpine
+FROM node:14.10.0-alpine
 
-RUN mkdir /dist
 COPY dist ./dist
 
 USER node

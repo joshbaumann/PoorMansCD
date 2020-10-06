@@ -5,6 +5,7 @@
 *Dockerfile*
 *docker-compose*
 tmp
+infrastructure
 node_modules
 npm-debug.log
 README.md
