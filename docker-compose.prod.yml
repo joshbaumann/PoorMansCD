@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 services:
 
   proxy:
@@ -35,8 +35,6 @@ services:
       - .env
     ports:
       - ${PORT}
-    depends_on:
-      - chrome-server
     networks:
       - web
 
